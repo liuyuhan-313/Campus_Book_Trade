@@ -1,0 +1,79 @@
+<view class="container">
+  <form bindsubmit="submitForm">
+    <!-- 图片上传 -->
+    <view class="upload-section">
+      <view class="upload-list">
+        <block wx:for="{{images}}" wx:key="*this">
+          <view class="upload-item">
+            <image src="{{item}}" mode="aspectFill" bindtap="previewImage" data-current="{{item}}"/>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">
+              <image src="/assets/icons/delete.png" mode="aspectFit"/>
+            </view>
+          </view>
+        </block>
+        <view class="upload-item add-btn" bindtap="chooseImage" wx:if="{{images.length < maxImageCount}}">
+          <image src="/assets/icons/image.png" mode="aspectFit"/>
+          <text>添加图片</text>
+        </view>
+      </view>
+      <text class="tips">最多上传{{maxImageCount}}张图片</text>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="form-section">
+      <view class="form-item">
+        <text class="label required">书名</text>
+        <input placeholder="请输入书名" value="{{form.title}}" bindinput="inputChange" data-field="title"/>
+      </view>
+      
+      <view class="form-item">
+        <text class="label required">作者</text>
+        <input placeholder="请输入作者" value="{{form.author}}" bindinput="inputChange" data-field="author"/>
+      </view>
+      
+      <view class="form-item">
+        <text class="label required">出版社</text>
+        <input placeholder="请输入出版社" value="{{form.publisher}}" bindinput="inputChange" data-field="publisher"/>
+      </view>
+      
+      <view class="form-item">
+        <text class="label">ISBN</text>
+        <input placeholder="请输入ISBN（选填）" value="{{form.isbn}}" bindinput="inputChange" data-field="isbn"/>
+      </view>
+      
+      <view class="form-item">
+        <text class="label required">原价</text>
+        <input type="digit" placeholder="请输入原价" value="{{form.originalPrice}}" bindinput="inputChange" data-field="originalPrice"/>
+      </view>
+      
+      <view class="form-item">
+        <text class="label required">售价</text>
+        <input type="digit" placeholder="请输入售价" value="{{form.price}}" bindinput="inputChange" data-field="price"/>
+      </view>
+      
+      <view class="form-item">
+        <text class="label required">校区</text>
+        <picker class="picker" range="{{campuses}}" value="{{campusIndex}}" bindchange="campusChange">
+          <view>{{campusIndex === -1 ? '请选择校区' : campuses[campusIndex]}}</view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <text class="label required">成色</text>
+        <picker class="picker" range="{{conditions}}" value="{{conditionIndex}}" bindchange="conditionChange">
+          <view>{{conditionIndex === -1 ? '请选择成色' : conditions[conditionIndex]}}</view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <text class="label required">描述</text>
+        <textarea placeholder="请输入书本描述" value="{{form.description}}" bindinput="inputChange" data-field="description"/>
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <button class="submit-btn" loading="{{submitting}}" bindtap="submitForm">
+      {{submitting ? '发布中...' : '立即发布'}}
+    </button>
+  </form>
+</view> 

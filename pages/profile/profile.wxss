@@ -1,0 +1,176 @@
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+/* 用户信息区域 */
+.user-info {
+  background: #fff;
+  padding: 40rpx 30rpx;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.avatar-wrapper {
+  position: relative;
+  margin-right: 30rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+
+.avatar-btn {
+  position: absolute;
+  bottom: -10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  background: #3cc51f;
+  color: #fff;
+  border-radius: 20rpx;
+  white-space: nowrap;
+  border: none;
+  line-height: 1.5;
+}
+
+.info-content {
+  flex: 1;
+}
+
+.nickname {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.nickname-btn {
+  padding: 0;
+  font-size: 32rpx;
+  background: none;
+  font-weight: bold;
+  color: #666;
+}
+
+.credit-score {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.score {
+  color: #3cc51f;
+  font-weight: bold;
+}
+
+/* 菜单列表 */
+.menu-list {
+  padding: 0 20rpx;
+}
+
+.menu-section {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.title {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.more {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.order-types {
+  display: flex;
+  padding: 30rpx 0;
+}
+
+.type-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.type-item image {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 10rpx;
+}
+
+.type-item text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.badge {
+  position: absolute;
+  top: -10rpx;
+  right: 20rpx;
+  background: #e64340;
+  color: #fff;
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 20rpx;
+  min-width: 30rpx;
+  text-align: center;
+}
+
+/* 其他功能菜单 */
+.menu-group {
+  background: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 20rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item .icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.menu-item text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.menu-item .count {
+  font-size: 24rpx;
+  color: #999;
+  margin-right: 10rpx;
+}
+
+.menu-item .arrow {
+  width: 32rpx;
+  height: 32rpx;
+} 

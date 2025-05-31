@@ -1,0 +1,50 @@
+{
+  "description": "项目配置文件",
+  "miniprogramRoot": "",
+  "compileType": "miniprogram",
+  "setting": {
+    "useCompilerPlugins": [
+      "typescript"
+    ],
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "coverView": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true,
+    "showShadowRootInWxmlPanel": true,
+    "packNpmRelationList": [],
+    "ignoreUploadUnusedFiles": true,
+    "compileHotReLoad": false,
+    "skylineRenderEnable": true,
+    "es6": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
+  },
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "libVersion": "3.8.6",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "appid": "wxb7ab54b2420832c0",
+  "projectname": "校园二手书"
+}

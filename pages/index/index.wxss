@@ -1,0 +1,290 @@
+/**index.wxss**/
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.scrollarea {
+  flex: 1;
+  overflow-y: hidden;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+  width: 80%;
+}
+
+.userinfo-avatar {
+  overflow: hidden;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+.avatar-wrapper {
+  padding: 0;
+  width: 56px !important;
+  border-radius: 8px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.avatar {
+  display: block;
+  width: 56px;
+  height: 56px;
+}
+
+.nickname-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  border-top: .5px solid rgba(0, 0, 0, 0.1);
+  border-bottom: .5px solid rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.nickname-label {
+  width: 105px;
+}
+
+.nickname-input {
+  flex: 1;
+}
+
+.container {
+  padding-bottom: 120rpx;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background: #fff;
+}
+
+.search-input {
+  flex: 1;
+  height: 72rpx;
+  background: var(--bg-color);
+  border-radius: 36rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  margin-right: 20rpx;
+}
+
+.search-input image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+
+.search-input input {
+  flex: 1;
+  height: 100%;
+  font-size: 28rpx;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+}
+
+.filter-btn image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+
+.filter-btn text {
+  font-size: 28rpx;
+  color: var(--text-color);
+}
+
+.book-list {
+  padding: 0 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.book-item {
+  display: flex;
+  background: #fff;
+  padding: 20rpx;
+  border-radius: 12rpx;
+}
+
+.book-cover {
+  width: 160rpx;
+  height: 220rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+
+.book-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 12rpx;
+}
+
+.book-author {
+  font-size: 24rpx;
+  color: var(--text-color-gray);
+  margin-bottom: 12rpx;
+}
+
+.book-meta {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.campus, .condition {
+  font-size: 22rpx;
+  color: var(--text-color-gray);
+  background: var(--bg-color);
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+.book-price-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.price {
+  color: var(--danger-color);
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.price::before {
+  content: '¥';
+  font-size: 24rpx;
+  margin-right: 4rpx;
+}
+
+.original-price {
+  margin-left: 12rpx;
+  color: var(--text-color-gray);
+  text-decoration: line-through;
+  font-size: 24rpx;
+}
+
+/* 空状态 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty text {
+  font-size: 28rpx;
+  color: var(--text-color-gray);
+}
+
+/* 加载状态 */
+.loading, .no-more {
+  text-align: center;
+  padding: 30rpx;
+  color: var(--text-color-gray);
+  font-size: 24rpx;
+}
+
+/* 发布按钮 */
+.publish-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.publish-btn image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* 公告栏 */
+.notice-bar {
+  height: 80rpx;
+  background: #fff7e6;
+  margin-bottom: 20rpx;
+}
+
+.notice-item {
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  height: 100%;
+}
+
+.notice-item image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+
+.notice-item text {
+  font-size: 24rpx;
+  color: #ff9900;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 校区筛选 */
+.campus-filter {
+  white-space: nowrap;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.campus-item {
+  display: inline-block;
+  padding: 12rpx 32rpx;
+  font-size: 28rpx;
+  color: var(--text-color);
+  margin-right: 20rpx;
+  border-radius: 32rpx;
+  background: var(--bg-color);
+}
+
+.campus-item.active {
+  color: #fff;
+  background: var(--primary-color);
+}

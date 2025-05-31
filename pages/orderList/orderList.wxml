@@ -1,0 +1,97 @@
+<view class="container">
+  <!-- 状态切换栏 -->
+  <view class="status-bar">
+    <view 
+      class="status-item {{currentStatus === '' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status=""
+    >全部</view>
+    <view 
+      class="status-item {{currentStatus === 'pending_payment' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="pending_payment"
+    >待付款</view>
+    <view 
+      class="status-item {{currentStatus === 'pending_delivery' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="pending_delivery"
+    >待发货</view>
+    <view 
+      class="status-item {{currentStatus === 'pending_receipt' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="pending_receipt"
+    >待收货</view>
+    <view 
+      class="status-item {{currentStatus === 'completed' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="completed"
+    >已完成</view>
+  </view>
+
+  <!-- 订单列表 -->
+  <view class="order-list" wx:if="{{orders.length > 0}}">
+    <view class="order-item" wx:for="{{orders}}" wx:key="id">
+      <!-- 订单头部 -->
+      <view class="order-header">
+        <text class="order-time">{{item.createTime}}</text>
+        <text class="order-status">{{item.statusText}}</text>
+      </view>
+
+      <!-- 商品信息 -->
+      <view class="book-info" bindtap="navigateToDetail" data-id="{{item.id}}">
+        <image class="book-cover" src="{{item.book.cover}}" mode="aspectFill"></image>
+        <view class="book-detail">
+          <text class="book-title text-ellipsis">{{item.book.title}}</text>
+          <text class="book-author text-ellipsis">{{item.book.author}}</text>
+          <view class="book-meta">
+            <text class="campus">{{item.book.campus}}</text>
+            <text class="condition">{{item.book.condition}}</text>
+          </view>
+          <view class="price-row">
+            <text class="price">{{item.price}}</text>
+            <text class="count">x1</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 订单底部 -->
+      <view class="order-footer">
+        <text class="total">合计：¥{{item.price}}</text>
+        <view class="btn-group">
+          <!-- 待付款 -->
+          <block wx:if="{{item.status === 'pending_payment'}}">
+            <button class="btn btn-default" bindtap="cancelOrder" data-id="{{item.id}}">取消订单</button>
+            <button class="btn btn-primary" bindtap="payOrder" data-id="{{item.id}}">立即付款</button>
+          </block>
+          
+          <!-- 待发货 -->
+          <block wx:elif="{{item.status === 'pending_delivery'}}">
+            <button class="btn btn-primary" bindtap="contactSeller" data-id="{{item.id}}">联系卖家</button>
+          </block>
+          
+          <!-- 待收货 -->
+          <block wx:elif="{{item.status === 'pending_receipt'}}">
+            <button class="btn btn-default" bindtap="contactSeller" data-id="{{item.id}}">联系卖家</button>
+            <button class="btn btn-primary" bindtap="confirmReceipt" data-id="{{item.id}}">确认收货</button>
+          </block>
+          
+          <!-- 已完成 -->
+          <block wx:elif="{{item.status === 'completed'}}">
+            <button class="btn btn-default" bindtap="deleteOrder" data-id="{{item.id}}">删除订单</button>
+            <button class="btn btn-primary" bindtap="writeReview" data-id="{{item.id}}" wx:if="{{!item.hasReview}}">评价</button>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:else>
+    <image class="empty-icon" src="/assets/icons/empty.png" mode="aspectFit"></image>
+    <text>暂无订单</text>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!loading && !hasMore}}">没有更多了</view>
+</view> 

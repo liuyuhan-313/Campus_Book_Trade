@@ -1,0 +1,80 @@
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-info">
+    <view class="avatar-wrapper">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/assets/icons/default-avatar.png'}}" mode="aspectFill"></image>
+      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" wx:if="{{!userInfo.avatarUrl}}">
+        设置头像
+      </button>
+    </view>
+    <view class="info-content">
+      <view class="nickname">
+        <text wx:if="{{userInfo.nickName}}">{{userInfo.nickName}}</text>
+        <button wx:else class="nickname-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">设置昵称</button>
+      </view>
+      <view class="credit-score">
+        <text>信用分：</text>
+        <text class="score">{{userInfo.creditScore || 100}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-list">
+    <!-- 我的订单 -->
+    <view class="menu-section">
+      <view class="section-header">
+        <text class="title">我的订单</text>
+        <navigator url="/pages/orderList/orderList" class="more">查看全部 ></navigator>
+      </view>
+      <view class="order-types">
+        <view class="type-item" bindtap="navigateToOrders" data-status="pending_payment">
+          <image src="/assets/icons/pending-payment.png" mode="aspectFit"></image>
+          <text>待付款</text>
+          <view class="badge" wx:if="{{orderCounts.pending_payment > 0}}">{{orderCounts.pending_payment}}</view>
+        </view>
+        <view class="type-item" bindtap="navigateToOrders" data-status="pending_receive">
+          <image src="/assets/icons/pending-receive.png" mode="aspectFit"></image>
+          <text>待收货</text>
+          <view class="badge" wx:if="{{orderCounts.pending_receive > 0}}">{{orderCounts.pending_receive}}</view>
+        </view>
+        <view class="type-item" bindtap="navigateToOrders" data-status="pending_review">
+          <image src="/assets/icons/pending-review.png" mode="aspectFit"></image>
+          <text>待评价</text>
+          <view class="badge" wx:if="{{orderCounts.pending_review > 0}}">{{orderCounts.pending_review}}</view>
+        </view>
+        <view class="type-item" bindtap="navigateToOrders" data-status="refund">
+          <image src="/assets/icons/refund.png" mode="aspectFit"></image>
+          <text>退款</text>
+          <view class="badge" wx:if="{{orderCounts.refund > 0}}">{{orderCounts.refund}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 其他功能 -->
+    <view class="menu-group">
+      <view class="menu-item" bindtap="navigateToCollection">
+        <image class="icon" src="/assets/icons/collection.png" mode="aspectFit"></image>
+        <text>我的收藏</text>
+        <text class="count" wx:if="{{collectionCount > 0}}">{{collectionCount}}</text>
+        <image class="arrow" src="/assets/icons/arrow-right.png" mode="aspectFit"></image>
+      </view>
+      <view class="menu-item" bindtap="navigateToPublished">
+        <image class="icon" src="/assets/icons/published.png" mode="aspectFit"></image>
+        <text>我发布的</text>
+        <text class="count" wx:if="{{publishedCount > 0}}">{{publishedCount}}</text>
+        <image class="arrow" src="/assets/icons/arrow-right.png" mode="aspectFit"></image>
+      </view>
+      <view class="menu-item" bindtap="showCreditScore">
+        <image class="icon" src="/assets/icons/credit.png" mode="aspectFit"></image>
+        <text>信用评分</text>
+        <image class="arrow" src="/assets/icons/arrow-right.png" mode="aspectFit"></image>
+      </view>
+      <view class="menu-item" bindtap="contactService">
+        <image class="icon" src="/assets/icons/service.png" mode="aspectFit"></image>
+        <text>联系客服</text>
+        <image class="arrow" src="/assets/icons/arrow-right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+</view> 

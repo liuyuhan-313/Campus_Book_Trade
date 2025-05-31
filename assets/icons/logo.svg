@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <rect x="40" y="60" width="120" height="80" rx="10" fill="#3cc51f"/>
+  <text x="100" y="110" font-family="Arial" font-size="24" fill="white" text-anchor="middle">校园二手书</text>
+  <path d="M60 130 L140 130" stroke="white" stroke-width="4"/>
+</svg> 

@@ -1,0 +1,59 @@
+<view class="container">
+  <!-- 排序选项 -->
+  <view class="sort-bar">
+    <view 
+      class="sort-item {{sortBy === 'time' ? 'active' : ''}}" 
+      bindtap="changeSort" 
+      data-sort="time"
+    >
+      按时间
+      <image 
+        class="sort-icon" 
+        src="/assets/icons/{{sortOrder === 'desc' ? 'sort-desc' : 'sort-asc'}}.png"
+      ></image>
+    </view>
+    <view 
+      class="sort-item {{sortBy === 'price' ? 'active' : ''}}" 
+      bindtap="changeSort" 
+      data-sort="price"
+    >
+      按价格
+      <image 
+        class="sort-icon" 
+        src="/assets/icons/{{sortOrder === 'desc' ? 'sort-desc' : 'sort-asc'}}.png"
+      ></image>
+    </view>
+  </view>
+
+  <!-- 书籍列表 -->
+  <view class="book-list" wx:if="{{books.length > 0}}">
+    <view class="book-item" wx:for="{{books}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
+      <image class="book-cover" src="{{item.cover}}" mode="aspectFill"></image>
+      <view class="book-info">
+        <text class="book-title text-ellipsis">{{item.title}}</text>
+        <text class="book-author text-ellipsis">{{item.author}}</text>
+        <view class="book-meta">
+          <text class="campus">{{item.campus}}</text>
+          <text class="condition">{{item.condition}}</text>
+        </view>
+        <view class="book-price-row">
+          <text class="price">{{item.price}}</text>
+          <text class="original-price" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</text>
+        </view>
+      </view>
+      <view class="collect-btn" catchtap="toggleCollect" data-id="{{item.id}}">
+        <image src="/assets/icons/collect-active.png"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:else>
+    <image class="empty-icon" src="/assets/icons/empty.png" mode="aspectFit"></image>
+    <text>暂无收藏</text>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!loading && !hasMore}}">没有更多了</view>
+</view> 

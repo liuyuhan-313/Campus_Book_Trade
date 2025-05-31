@@ -1,0 +1,82 @@
+<!--index.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- 公告栏 -->
+    <swiper class="notice-bar" autoplay circular vertical>
+      <swiper-item wx:for="{{notice}}" wx:key="id">
+        <view class="notice-item">
+          <image src="/assets/icons/notice.png" mode="aspectFit"></image>
+          <text>{{item.content}}</text>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 搜索栏 -->
+    <view class="search-bar">
+      <view class="search-input">
+        <image src="/assets/icons/search.png" mode="aspectFit"></image>
+        <input 
+          type="text" 
+          placeholder="搜索书名/作者/ISBN" 
+          value="{{searchKeyword}}"
+          bindinput="onSearchInput"
+          bindconfirm="onSearch"
+        />
+      </view>
+      <view class="filter-btn" bindtap="showFilter">
+        <image src="/assets/icons/filter.png" mode="aspectFit"></image>
+        <text>筛选</text>
+      </view>
+    </view>
+
+    <!-- 校区筛选 -->
+    <scroll-view class="campus-filter" scroll-x>
+      <view 
+        class="campus-item {{selectedCampus === '' ? 'active' : ''}}" 
+        bindtap="onCampusSelect" 
+        data-campus=""
+      >全部</view>
+      <view 
+        class="campus-item {{selectedCampus === item ? 'active' : ''}}" 
+        wx:for="{{campuses}}" 
+        wx:key="*this"
+        bindtap="onCampusSelect"
+        data-campus="{{item}}"
+      >{{item}}</view>
+    </scroll-view>
+
+    <!-- 书籍列表 -->
+    <view class="book-list" wx:if="{{books.length > 0}}">
+      <view class="book-item" wx:for="{{books}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
+        <image class="book-cover" src="{{item.cover || '/assets/icons/book-placeholder.png'}}" mode="aspectFill"></image>
+        <view class="book-info">
+          <text class="book-title text-ellipsis">{{item.title}}</text>
+          <text class="book-author text-ellipsis">{{item.author}}</text>
+          <view class="book-meta">
+            <text class="campus">{{item.campus}}</text>
+            <text class="condition">{{item.condition}}</text>
+          </view>
+          <view class="book-price-row">
+            <text class="price">{{item.price}}</text>
+            <text class="original-price" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:elif="{{!loading}}">
+      <image class="empty-icon" src="/assets/icons/empty.png" mode="aspectFit"></image>
+      <text>暂无相关书籍</text>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="loading" wx:if="{{loading}}">加载中...</view>
+    <view class="no-more" wx:if="{{!loading && !hasMore}}">没有更多了</view>
+
+    <!-- 发布按钮 -->
+    <view class="publish-btn" bindtap="navigateToPublish">
+      <image src="/assets/icons/publish.png" mode="aspectFit"></image>
+    </view>
+  </view>
+</scroll-view>

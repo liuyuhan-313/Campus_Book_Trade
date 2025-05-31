@@ -1,0 +1,20 @@
+<view class="container">
+  <view class="header">
+    <image class="logo" src="/assets/icons/logo.png" mode="aspectFit"></image>
+    <text class="title">校园二手书</text>
+  </view>
+
+  <view class="login-box">
+    <button class="login-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">
+      <image src="/assets/icons/wechat.png" mode="aspectFit"></image>
+      <text>微信一键登录</text>
+    </button>
+  </view>
+
+  <view class="tips">
+    <text class="tip-text">登录即表示同意</text>
+    <text class="link" bindtap="navigateToUserAgreement">《用户协议》</text>
+    <text class="tip-text">和</text>
+    <text class="link" bindtap="navigateToPrivacyPolicy">《隐私政策》</text>
+  </view>
+</view> 

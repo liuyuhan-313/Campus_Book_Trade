@@ -1,0 +1,46 @@
+<view class="container">
+  <!-- 消息类型切换 -->
+  <view class="message-tabs">
+    <view class="tab {{activeTab === 'chat' ? 'active' : ''}}" bindtap="switchTab" data-type="chat">
+      聊天消息
+    </view>
+    <view class="tab {{activeTab === 'system' ? 'active' : ''}}" bindtap="switchTab" data-type="system">
+      系统通知
+    </view>
+  </view>
+
+  <!-- 聊天消息列表 -->
+  <view class="message-list" wx:if="{{activeTab === 'chat'}}">
+    <view class="message-item" wx:for="{{chatMessages}}" wx:key="id" bindtap="navigateToChat" data-id="{{item.id}}">
+      <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+      <view class="content">
+        <view class="header">
+          <text class="name">{{item.name}}</text>
+          <text class="time">{{item.lastTime}}</text>
+        </view>
+        <view class="message">{{item.lastMessage}}</view>
+      </view>
+      <view class="badge" wx:if="{{item.unread > 0}}">{{item.unread}}</view>
+    </view>
+  </view>
+
+  <!-- 系统通知列表 -->
+  <view class="message-list" wx:else>
+    <view class="message-item" wx:for="{{systemMessages}}" wx:key="id">
+      <image class="system-icon" src="/assets/icons/system-notice.png" mode="aspectFill"></image>
+      <view class="content">
+        <view class="header">
+          <text class="name">{{item.title}}</text>
+          <text class="time">{{item.time}}</text>
+        </view>
+        <view class="message">{{item.content}}</view>
+      </view>
+      <view class="status {{item.read ? 'read' : ''}}"></view>
+    </view>
+  </view>
+
+  <!-- 空状态展示 -->
+  <view class="empty-state" wx:if="{{(activeTab === 'chat' && chatMessages.length === 0) || (activeTab === 'system' && systemMessages.length === 0)}}">
+    <text>暂无消息</text>
+  </view>
+</view> 

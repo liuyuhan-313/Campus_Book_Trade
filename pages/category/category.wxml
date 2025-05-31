@@ -1,0 +1,48 @@
+<view class="container">
+  <view class="category-list">
+    <!-- 校区分类 -->
+    <view class="category-section">
+      <view class="section-title">校区分类</view>
+      <view class="tag-list">
+        <view class="tag" wx:for="{{campuses}}" wx:key="*this" data-type="campus" data-value="{{item}}" bindtap="onTagTap">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 书籍类型分类 -->
+    <view class="category-section">
+      <view class="section-title">书籍类型</view>
+      <view class="tag-list">
+        <view class="tag" wx:for="{{bookTypes}}" wx:key="*this" data-type="bookType" data-value="{{item}}" bindtap="onTagTap">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 书籍状态分类 -->
+    <view class="category-section">
+      <view class="section-title">书籍状态</view>
+      <view class="tag-list">
+        <view class="tag" wx:for="{{conditions}}" wx:key="*this" data-type="condition" data-value="{{item}}" bindtap="onTagTap">
+          {{item}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选结果展示 -->
+  <view class="book-list" wx:if="{{books.length > 0}}">
+    <view class="book-item" wx:for="{{books}}" wx:key="id">
+      <image src="{{item.cover}}" mode="aspectFit" />
+      <view class="book-info">
+        <text class="title">{{item.title}}</text>
+        <text class="price">¥{{item.price}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="empty-state" wx:else>
+    <text>暂无符合条件的书籍</text>
+  </view>
+</view> 

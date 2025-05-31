@@ -1,0 +1,73 @@
+<view class="container">
+  <!-- 轮播图 -->
+  <swiper class="swiper" indicator-dots circular>
+    <swiper-item wx:for="{{book.images}}" wx:key="*this">
+      <image src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 基本信息 -->
+  <view class="info-section">
+    <view class="price-row">
+      <text class="price">{{book.price}}</text>
+      <text class="original-price" wx:if="{{book.originalPrice}}">¥{{book.originalPrice}}</text>
+    </view>
+    <view class="title">{{book.title}}</view>
+    <view class="meta">
+      <text class="campus">{{book.campus}}</text>
+      <text class="condition">{{book.condition}}</text>
+    </view>
+  </view>
+
+  <!-- 详细信息 -->
+  <view class="detail-section">
+    <view class="detail-item">
+      <text class="label">作者</text>
+      <text class="value">{{book.author}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">出版社</text>
+      <text class="value">{{book.publisher}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">ISBN</text>
+      <text class="value">{{book.isbn}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">新旧程度</text>
+      <text class="value">{{book.condition}}</text>
+    </view>
+  </view>
+
+  <!-- 详情描述 -->
+  <view class="description-section">
+    <view class="section-title">详情描述</view>
+    <view class="description">{{book.description}}</view>
+  </view>
+
+  <!-- 卖家信息 -->
+  <view class="seller-section">
+    <view class="section-title">卖家信息</view>
+    <view class="seller-info">
+      <image class="avatar" src="{{book.seller.avatar}}" mode="aspectFill"></image>
+      <view class="seller-detail">
+        <text class="nickname">{{book.seller.nickname}}</text>
+        <text class="credit-score">信用分：{{book.seller.creditScore}}</text>
+      </view>
+      <button class="contact-btn" bindtap="contactSeller">联系卖家</button>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="action-bar">
+    <view class="action-item" bindtap="toggleCollect">
+      <image src="/assets/icons/{{isCollected ? 'collect-active' : 'collect'}}.png"></image>
+      <text>收藏</text>
+    </view>
+    <view class="action-item" bindtap="share">
+      <image src="/assets/icons/share.png"></image>
+      <text>分享</text>
+    </view>
+    <button class="buy-btn" bindtap="buy">立即购买</button>
+  </view>
+</view> 
