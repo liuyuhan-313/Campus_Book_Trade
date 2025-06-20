@@ -2,30 +2,74 @@
   <!-- 用户信息区域 -->
   <view class="user-info">
     <view class="avatar-wrapper">
-      <image class="avatar" src="{{userInfo.avatarUrl || '/assets/icons/default-avatar.png'}}" mode="aspectFill"></image>
-      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" wx:if="{{!userInfo.avatarUrl}}">
-        设置头像
+      <image class="avatar" src="{{userInfo.avatarUrl || '/assets/icons/default-avatar.png'}}" mode="aspectFill" binderror="onAvatarError"></image>
+      <button class="avatar-btn" bindtap="onChooseAvatar">
+        更换头像
       </button>
     </view>
     <view class="info-content">
       <view class="nickname">
-        <text wx:if="{{userInfo.nickName}}">{{userInfo.nickName}}</text>
-        <button wx:else class="nickname-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">设置昵称</button>
+        <block wx:if="{{!showNicknameInput}}">
+          <text>{{userInfo.nickName || '昵称'}}</text>
+          <text class="edit-icon" bindtap="showEditNickname">✏️</text>
+        </block>
+        <input wx:if="{{showNicknameInput}}"
+               class="nickname-input" 
+               type="nickname" 
+               placeholder="请输入昵称"
+               value="{{tempNickname}}"
+               bindinput="onNicknameChange"
+               bindblur="onNicknameInput"
+               bindconfirm="onNicknameInput"
+               focus="{{showNicknameInput}}"/>
       </view>
-      <view class="credit-score">
+      <view class="credit-score" bindtap="showCreditScore">
         <text>信用分：</text>
-        <text class="score">{{userInfo.creditScore || 100}}</text>
+        <text class="score">{{userInfo.credit_score || 5.0}}</text>
       </view>
     </view>
   </view>
 
-  <!-- 功能菜单 -->
-  <view class="menu-list">
+  <!-- 个人信息编辑区域 -->
+  <view class="info-edit-section">
+    <view class="section-title">个人信息</view>
+    <view class="info-form">
+      <view class="form-item">
+        <text class="label">手机号码</text>
+        <input type="number" 
+               placeholder="请输入手机号码" 
+               value="{{userInfo.phone}}"
+               bindinput="onPhoneInput"/>
+      </view>
+      <view class="form-item">
+        <text class="label">学号</text>
+        <input type="text" 
+               placeholder="请输入学号" 
+               value="{{userInfo.student_id}}"
+               bindinput="onStudentIdInput"/>
+      </view>
+      <view class="form-item">
+        <text class="label">校区</text>
+        <picker mode="selector" 
+                range="{{campusList}}" 
+                value="{{campusIndex}}"
+                bindchange="onCampusChange">
+          <view class="picker">
+            {{userInfo.campus || '请选择校区'}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <button class="save-btn" bindtap="saveUserInfo">保存信息</button>
+  </view>
+
+ <!-- 功能菜单 -->
+ <view class="menu-list">
     <!-- 我的订单 -->
     <view class="menu-section">
       <view class="section-header">
         <text class="title">我的订单</text>
-        <navigator url="/pages/orderList/orderList" class="more">查看全部 ></navigator>
+        <view class="more" bindtap="navigateToOrders">查看全部 ></view>
       </view>
       <view class="order-types">
         <view class="type-item" bindtap="navigateToOrders" data-status="pending_payment">
@@ -33,7 +77,7 @@
           <text>待付款</text>
           <view class="badge" wx:if="{{orderCounts.pending_payment > 0}}">{{orderCounts.pending_payment}}</view>
         </view>
-        <view class="type-item" bindtap="navigateToOrders" data-status="pending_receive">
+        <view class="type-item" bindtap="navigateToOrders" data-status="pending_receipt">
           <image src="/assets/icons/pending-receive.png" mode="aspectFit"></image>
           <text>待收货</text>
           <view class="badge" wx:if="{{orderCounts.pending_receive > 0}}">{{orderCounts.pending_receive}}</view>
@@ -50,7 +94,6 @@
         </view>
       </view>
     </view>
-
     <!-- 其他功能 -->
     <view class="menu-group">
       <view class="menu-item" bindtap="navigateToCollection">
@@ -70,10 +113,22 @@
         <text>信用评分</text>
         <image class="arrow" src="/assets/icons/arrow-right.png" mode="aspectFit"></image>
       </view>
-      <view class="menu-item" bindtap="contactService">
+      <view class="menu-item last-item" bindtap="contactService">
         <image class="icon" src="/assets/icons/service.png" mode="aspectFit"></image>
         <text>联系客服</text>
         <image class="arrow" src="/assets/icons/arrow-right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+      <!-- 在这里添加开发测试区域（注意缩进对齐） -->
+    <view class="menu-group" wx:if="{{isDev}}">
+      <view class="menu-section">
+        <view class="section-header">
+          <text class="title">开发测试</text>
+        </view>
+        <view class="debug-menu">
+          <button class="debug-btn" bindtap="switchToTestAccount">切换测试账号</button>
+          <button class="debug-btn" bindtap="switchToMainAccount">切换主账号</button>
+        </view>
       </view>
     </view>
   </view>

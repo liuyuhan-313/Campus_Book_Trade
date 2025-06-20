@@ -19,8 +19,11 @@ const checkFileSize = (size) => {
 // 选择图片
 const chooseImage = async (count = 9) => {
   try {
+    // 确保count是数字类型
+    const numCount = parseInt(count, 10);
+    
     const res = await wx.chooseMedia({
-      count,
+      count: numCount,
       mediaType: ['image'],
       sourceType: ['album', 'camera'],
       sizeType: ['compressed']

@@ -6,10 +6,14 @@
     "pages/profile/profile",
     "pages/bookDetail/bookDetail",
     "pages/publish/publish",
+    "pages/published/published",
     "pages/chat/chat",
     "pages/orderList/orderList",
+    "pages/orderDetail/orderDetail",
     "pages/collection/collection",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/order/create",
+    "pages/review/review"
   ],
   "window": {
     "backgroundTextStyle": "light",

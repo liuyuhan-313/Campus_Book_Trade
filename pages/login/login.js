@@ -16,44 +16,91 @@ Page({
   },
 
   async onGetUserInfo(e) {
+    if (this.data.loading) return;
+
     try {
+      // 检查用户是否同意授权
+      if (!e.detail.userInfo) {
+        wx.showToast({
+          title: '需要您的授权才能登录',
+          icon: 'none',
+          duration: 2000
+        });
+        return;
+      }
+
       this.setData({ loading: true });
       
       // 获取登录code
-      const { code } = await wx.login();
-      if (!code) {
+      const loginResult = await wx.login();
+      if (!loginResult.code) {
         throw new Error('获取code失败');
       }
 
+      // 准备登录数据
+      const loginData = {
+        code: loginResult.code,
+        nickname: e.detail.userInfo.nickName,
+        avatar_url: e.detail.userInfo.avatarUrl,
+        gender: e.detail.userInfo.gender,
+      };
+
+      console.log('登录数据:', loginData);
+
       // 调用登录接口
-      const res = await request(API.login, 'POST', { code });
+      const res = await request({
+        url: API.login,
+        method: 'POST',
+        data: loginData
+      });
+
+      console.log('登录响应:', res);
       
-      if (res.data && res.data.token) {
+      if (res && res.token) {
         // 保存token
-        wx.setStorageSync('token', res.data.token);
+        wx.setStorageSync('token', res.token);
         
         // 保存用户信息
-        if (res.data.user) {
-          wx.setStorageSync('userInfo', res.data.user);
+        if (res.user) {
+          wx.setStorageSync('userInfo', res.user);
+          app.globalData.userInfo = res.user;
+          app.globalData.token = res.token;
         }
 
-        // 返回上一页或首页
-        wx.navigateBack({
-          delta: 1,
-          fail: () => {
+        wx.showToast({
+          title: '登录成功',
+          icon: 'success',
+          duration: 1500
+        });
+
+        // 延迟返回，让用户看到成功提示
+        setTimeout(() => {
+          // 返回上一页或首页
+          const pages = getCurrentPages();
+          if (pages.length > 1) {
+            wx.navigateBack({
+              delta: 1,
+              fail: () => {
+                wx.switchTab({
+                  url: '/pages/index/index'
+                });
+              }
+            });
+          } else {
             wx.switchTab({
               url: '/pages/index/index'
             });
           }
-        });
+        }, 1500);
       } else {
-        throw new Error('登录失败');
+        throw new Error(res.message || '登录失败');
       }
     } catch (error) {
       console.error('登录失败:', error);
       wx.showToast({
-        title: '登录失败',
-        icon: 'none'
+        title: error.message || '登录失败，请重试',
+        icon: 'none',
+        duration: 2000
       });
     } finally {
       this.setData({ loading: false });

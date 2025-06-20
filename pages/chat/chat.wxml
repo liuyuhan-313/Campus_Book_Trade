@@ -1,86 +1,78 @@
-<view class="container">
-  <!-- 聊天内容区域 -->
-  <scroll-view 
-    class="chat-list" 
-    scroll-y 
-    scroll-into-view="{{scrollIntoView}}"
-    bindscrolltoupper="loadMoreMessages"
-  >
-    <!-- 加载更多 -->
-    <view class="loading" wx:if="{{loading}}">加载中...</view>
-    
-    <!-- 消息列表 -->
-    <view 
-      class="message-item {{item.senderId === userId ? 'self' : ''}}" 
-      wx:for="{{messages}}" 
-      wx:key="id"
-      id="msg-{{item.id}}"
-    >
-      <!-- 头像 -->
-      <image 
-        class="avatar" 
-        src="{{item.senderId === userId ? userInfo.avatar : targetInfo.avatar}}"
-        mode="aspectFill"
-      ></image>
-      
-      <!-- 消息内容 -->
-      <view class="message-content">
-        <!-- 文本消息 -->
-        <view class="text" wx:if="{{item.type === 'text'}}">
-          {{item.content}}
+<view class="chat-container">
+<!-- 顶部书籍信息 -->
+  <view class="book-info" bindtap="navigateToBook" wx:if="{{currentSession.book}}">
+      <image class="book-cover" 
+             src="{{currentSession.book.cover}}"  
+             mode="aspectFill"
+             binderror="handleImageError"></image>
+      <view class="book-detail">
+        <text class="book-title">{{currentSession.book.title || '未知书籍'}}</text>
+        <text class="book-price" wx:if="{{currentSession.book.price}}">¥{{currentSession.book.price}}</text>
+      </view>
+      <view class="arrow">></view>
+    </view>
+  <!-- 没有选择会话时显示聊天列表 -->
+  <block wx:if="{{!currentSession}}">
+    <view class="chat-list">
+      <view class="chat-item" 
+            wx:for="{{chatList}}" 
+            wx:key="id"
+            bindtap="handleChatItemClick"
+            data-session-id="{{item.id}}">
+        <image class="book-cover" 
+               src="{{item.bookCover}}" 
+               mode="aspectFill"
+               binderror="handleImageError"/>
+        <view class="chat-info">
+          <view class="book-title">{{item.bookTitle}}</view>
+          <view class="last-message">{{item.lastMessage}}</view>
+          <view class="time">{{item.lastTime}}</view>
         </view>
-        
-        <!-- 图片消息 -->
-        <image 
-          class="image-message" 
-          wx:elif="{{item.type === 'image'}}" 
-          src="{{item.content}}"
-          mode="widthFix"
-          bindtap="previewImage"
-          data-url="{{item.content}}"
-        ></image>
-
-        <!-- 商品消息 -->
-        <view class="book-card" wx:elif="{{item.type === 'book'}}" bindtap="navigateToBook" data-id="{{item.bookId}}">
-          <image class="book-cover" src="{{item.book.cover}}" mode="aspectFill"></image>
-          <view class="book-info">
-            <text class="book-title">{{item.book.title}}</text>
-            <text class="book-price">¥{{item.book.price}}</text>
-          </view>
+        <view class="unread-count" wx:if="{{item.unreadCount > 0}}">
+          {{item.unreadCount}}
         </view>
       </view>
-      
-      <!-- 发送状态 -->
-      <view class="status" wx:if="{{item.senderId === userId}}">
-        <text class="sending" wx:if="{{item.status === 'sending'}}">发送中...</text>
-        <text class="failed" wx:elif="{{item.status === 'failed'}}" bindtap="resendMessage" data-index="{{index}}">发送失败，点击重试</text>
-      </view>
     </view>
-  </scroll-view>
+  </block>
 
-  <!-- 输入区域 -->
-  <view class="input-section">
-    <!-- 工具栏 -->
-    <view class="toolbar">
-      <view class="tool-item" bindtap="chooseImage">
-        <image src="/assets/icons/image.png"></image>
-      </view>
-      <view class="tool-item" bindtap="shareBook" wx:if="{{bookId}}">
-        <image src="/assets/icons/book.png"></image>
-      </view>
-    </view>
-    
-    <!-- 输入框 -->
-    <view class="input-box">
-      <input 
-        type="text"
-        value="{{inputContent}}"
-        placeholder="输入消息..."
-        confirm-type="send"
-        bindinput="onInput"
-        bindconfirm="sendTextMessage"
-      />
-      <view class="send-btn {{inputContent ? 'active' : ''}}" bindtap="sendTextMessage">发送</view>
+  <!-- 选择了会话后显示聊天界面 -->
+  <block wx:else>
+    <!-- 聊天界面头部 -->
+    <view class="chat-header">
+      <view class="user-info">
+      <!-- 根据当前用户身份显示对方的身份和昵称 -->
+      <text class="user-role">{{currentSession.is_seller ? '买家' : '卖家'}}</text>
+      <text class="user-name">{{currentSession.other_user.nickname}}</text>
     </view>
   </view>
-</view> 
+    
+    <!-- 消息列表区域 -->
+    <scroll-view class="chat-list" scroll-y scroll-into-view="{{scrollToMessage}}" scroll-with-animation>
+      <block wx:if="{{messages && messages.length > 0}}">
+        <view class="message-item {{item.is_self ? 'self' : 'other'}}"
+              wx:for="{{messages}}"
+              wx:key="id"
+              id="msg-{{index}}">
+          <view class="message-time" wx:if="{{item.showTime}}">
+            {{item.timeStr}}
+          </view>
+          <view class="message-content">
+            <text>{{item.content}}</text>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+
+    <!-- 输入区域 -->
+    <view class="input-area">
+      <input class="message-input"
+             type="text"
+             value="{{message}}"
+             bindinput="handleInput"
+             placeholder="请输入消息"
+             confirm-type="send"
+             bindconfirm="handleSendMessage"/>
+      <button class="send-btn" bindtap="handleSendMessage">发送</button>
+    </view>
+  </block>
+</view>

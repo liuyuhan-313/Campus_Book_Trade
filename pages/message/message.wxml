@@ -12,11 +12,13 @@
   <!-- 聊天消息列表 -->
   <view class="message-list" wx:if="{{activeTab === 'chat'}}">
     <view class="message-item" wx:for="{{chatMessages}}" wx:key="id" bindtap="navigateToChat" data-id="{{item.id}}">
-      <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
       <view class="content">
         <view class="header">
           <text class="name">{{item.name}}</text>
           <text class="time">{{item.lastTime}}</text>
+        </view>
+        <view class="book-info" wx:if="{{item.bookInfo.title}}">
+          <text class="book-title">{{item.bookInfo.title}}</text>
         </view>
         <view class="message">{{item.lastMessage}}</view>
       </view>

@@ -1,0 +1,120 @@
+.container {
+  padding: 20rpx;
+}
+
+/* 搜索栏样式 */
+.search-bar {
+  display: flex;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.search-bar input {
+  flex: 1;
+  height: 70rpx;
+  padding: 0 20rpx;
+  background: #f5f5f5;
+  border-radius: 35rpx;
+  margin-right: 20rpx;
+}
+
+.search-bar button {
+  width: 150rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  color: #fff;
+  background: #07c160;
+  border-radius: 35rpx;
+}
+
+/* 分类选择样式 */
+.category-bar {
+  padding: 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+}
+
+.picker {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 图书列表样式 */
+.book-list {
+  background: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+}
+
+.book-item {
+  display: flex;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.book-item:last-child {
+  border-bottom: none;
+}
+
+.book-cover {
+  width: 180rpx;
+  height: 240rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+
+.book-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-title {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.book-author {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.book-price {
+  font-size: 36rpx;
+  color: #f60;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.book-condition {
+  font-size: 24rpx;
+  color: #999;
+  padding: 4rpx 12rpx;
+  background: #f5f5f5;
+  border-radius: 4rpx;
+  display: inline-block;
+}
+
+/* 空状态提示 */
+.empty-tip {
+  text-align: center;
+  padding: 40rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 加载状态 */
+.loading, .no-more {
+  text-align: center;
+  padding: 20rpx;
+  color: #999;
+  font-size: 24rpx;
+} 

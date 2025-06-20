@@ -4,8 +4,13 @@
     <view class="category-section">
       <view class="section-title">校区分类</view>
       <view class="tag-list">
-        <view class="tag" wx:for="{{campuses}}" wx:key="*this" data-type="campus" data-value="{{item}}" bindtap="onTagTap">
-          {{item}}
+        <view class="tag {{selectedFilters.campus === item.value ? 'active' : ''}}" 
+              wx:for="{{campuses}}" 
+              wx:key="value" 
+              data-type="campus" 
+              data-value="{{item.value}}" 
+              bindtap="onTagTap">
+          {{item.label}}
         </view>
       </view>
     </view>
@@ -14,8 +19,13 @@
     <view class="category-section">
       <view class="section-title">书籍类型</view>
       <view class="tag-list">
-        <view class="tag" wx:for="{{bookTypes}}" wx:key="*this" data-type="bookType" data-value="{{item}}" bindtap="onTagTap">
-          {{item}}
+        <view class="tag {{selectedFilters.bookType === item.id ? 'active' : ''}}" 
+              wx:for="{{bookTypes}}" 
+              wx:key="id" 
+              data-type="bookType" 
+              data-value="{{item.id}}" 
+              bindtap="onTagTap">
+          {{item.name}}
         </view>
       </view>
     </view>
@@ -24,8 +34,13 @@
     <view class="category-section">
       <view class="section-title">书籍状态</view>
       <view class="tag-list">
-        <view class="tag" wx:for="{{conditions}}" wx:key="*this" data-type="condition" data-value="{{item}}" bindtap="onTagTap">
-          {{item}}
+        <view class="tag {{selectedFilters.condition === item.value ? 'active' : ''}}" 
+              wx:for="{{conditions}}" 
+              wx:key="value" 
+              data-type="condition" 
+              data-value="{{item.value}}" 
+              bindtap="onTagTap">
+          {{item.label}}
         </view>
       </view>
     </view>
@@ -33,8 +48,8 @@
 
   <!-- 筛选结果展示 -->
   <view class="book-list" wx:if="{{books.length > 0}}">
-    <view class="book-item" wx:for="{{books}}" wx:key="id">
-      <image src="{{item.cover}}" mode="aspectFit" />
+    <view class="book-item" wx:for="{{books}}" wx:key="id" data-book-id="{{item.id}}" bindtap="goToBookDetail">
+      <image src="{{item.cover_image || '/assets/icons/default-book.png'}}" mode="aspectFit" class="book-image" />
       <view class="book-info">
         <text class="title">{{item.title}}</text>
         <text class="price">¥{{item.price}}</text>

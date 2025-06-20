@@ -1,14 +1,163 @@
+# ===================================================================
+# 校园二手书交易平台 .gitignore 文件
+# ===================================================================
+
+# ===================================================================
+# Python相关
+# ===================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Django相关
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ===================================================================
+# Django项目特定
+# ===================================================================
+# 虚拟环境
+Campus-Book-Trade/myenv/
+myenv/
+
+# 媒体文件 (用户上传的文件)
+Campus-Book-Trade/media/uploads/
+Campus-Book-Trade/media/avatars/
+Campus-Book-Trade/media/book_covers/
+
+# 静态文件收集目录
+Campus-Book-Trade/staticfiles/
+Campus-Book-Trade/static_collected/
+
+# ===================================================================
+# 微信小程序相关
+# ===================================================================
+# 微信开发者工具相关
+.tea/
+.wxidea/
+
+# 小程序打包文件
+miniprogram_npm/
+node_modules/
+
+# 小程序本地配置
+project.private.config.json
+
+# ===================================================================
+# 操作系统相关
+# ===================================================================
 # Windows
 [Dd]esktop.ini
 Thumbs.db
 $RECYCLE.BIN/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
 
 # macOS
 .DS_Store
+.AppleDouble
+.LSOverride
 .fseventsd
 .Spotlight-V100
 .TemporaryItems
 .Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
-# Node.js
-node_modules/
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ===================================================================
+# IDE和编辑器相关
+# ===================================================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+
+# ===================================================================
+# 其他
+# ===================================================================
+# 日志文件
+*.log
+logs/
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+
+# 临时文件夹
+tmp/
+temp/
+
+# 备份文件
+*.bak
+*.backup

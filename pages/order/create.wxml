@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="book-info" wx:if="{{bookInfo}}">
+    <image class="book-cover" src="{{bookInfo.cover}}" mode="aspectFill"></image>
+    <view class="book-detail">
+      <text class="book-title">{{bookInfo.title}}</text>
+      <text class="book-price">¥{{bookInfo.price}}</text>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">收货地址</text>
+      <input 
+        class="input" 
+        placeholder="请输入详细收货地址" 
+        value="{{address}}"
+        bindinput="onAddressInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">联系人</text>
+      <input 
+        class="input" 
+        placeholder="请输入联系人姓名" 
+        value="{{contactName}}"
+        bindinput="onContactNameInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">联系电话</text>
+      <input 
+        class="input" 
+        type="number"
+        maxlength="11"
+        placeholder="请输入联系电话" 
+        value="{{contactPhone}}"
+        bindinput="onContactPhoneInput"
+      />
+    </view>
+  </view>
+
+  <view class="bottom-section">
+    <view class="price-row">
+      <text>实付款：</text>
+      <text class="total-price">¥{{bookInfo.price}}</text>
+    </view>
+    <button 
+      class="submit-btn" 
+      type="primary" 
+      loading="{{loading}}"
+      bindtap="handleSubmit"
+    >立即下单并支付</button>
+  </view>
+</view> 

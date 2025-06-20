@@ -2,11 +2,17 @@
 <scroll-view class="scrollarea" scroll-y type="list">
   <view class="container">
     <!-- 公告栏 -->
-    <swiper class="notice-bar" autoplay circular vertical>
+    <swiper class="notice-bar" 
+            autoplay 
+            circular 
+            vertical 
+            interval="3000"
+            duration="1000"
+            wx:if="{{notice && notice.length > 0}}">
       <swiper-item wx:for="{{notice}}" wx:key="id">
         <view class="notice-item">
           <image src="/assets/icons/notice.png" mode="aspectFit"></image>
-          <text>{{item.content}}</text>
+          <text>{{item.title}}: {{item.content}}</text>
         </view>
       </swiper-item>
     </swiper>
@@ -32,29 +38,77 @@
     <!-- 校区筛选 -->
     <scroll-view class="campus-filter" scroll-x>
       <view 
-        class="campus-item {{selectedCampus === '' ? 'active' : ''}}" 
-        bindtap="onCampusSelect" 
-        data-campus=""
-      >全部</view>
-      <view 
-        class="campus-item {{selectedCampus === item ? 'active' : ''}}" 
         wx:for="{{campuses}}" 
-        wx:key="*this"
+        wx:key="value"
+        class="campus-item {{selectedCampus === item.value ? 'active' : ''}}" 
         bindtap="onCampusSelect"
-        data-campus="{{item}}"
-      >{{item}}</view>
+        data-campus="{{item.value}}"
+      >{{item.label}}</view>
     </scroll-view>
+
+    <!-- 筛选面板 -->
+    <view class="filter-panel" wx:if="{{showFilterPanel}}">
+      <view class="filter-header">
+        <text>筛选条件</text>
+        <image src="/assets/icons/delete.png" mode="aspectFit" bindtap="hideFilter"></image>
+      </view>
+      <view class="filter-content">
+        <!-- 成色筛选 -->
+        <view class="filter-section">
+          <text class="section-title">成色</text>
+          <view class="condition-list">
+            <view 
+              class="condition-item {{filterOptions.condition === '' ? 'active' : ''}}"
+              bindtap="onConditionSelect"
+              data-condition=""
+            >全部</view>
+            <view 
+              class="condition-item {{filterOptions.condition === item.value ? 'active' : ''}}"
+              wx:for="{{conditions}}"
+              wx:key="value"
+              bindtap="onConditionSelect"
+              data-condition="{{item.value}}"
+            >{{item.label}}</view>
+          </view>
+        </view>
+        <!-- 排序方式 -->
+        <view class="filter-section">
+          <text class="section-title">排序方式</text>
+          <view class="sort-list">
+            <view 
+              class="sort-item {{filterOptions.sortBy === 'newest' ? 'active' : ''}}"
+              bindtap="onSortSelect"
+              data-sort="newest"
+            >最新发布</view>
+            <view 
+              class="sort-item {{filterOptions.sortBy === 'price-asc' ? 'active' : ''}}"
+              bindtap="onSortSelect"
+              data-sort="price-asc"
+            >价格从低到高</view>
+            <view 
+              class="sort-item {{filterOptions.sortBy === 'price-desc' ? 'active' : ''}}"
+              bindtap="onSortSelect"
+              data-sort="price-desc"
+            >价格从高到低</view>
+          </view>
+        </view>
+      </view>
+      <view class="filter-footer">
+        <button class="reset-btn" bindtap="resetFilter">重置</button>
+        <button class="confirm-btn" bindtap="applyFilter">确定</button>
+      </view>
+    </view>
 
     <!-- 书籍列表 -->
     <view class="book-list" wx:if="{{books.length > 0}}">
       <view class="book-item" wx:for="{{books}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
-        <image class="book-cover" src="{{item.cover || '/assets/icons/book-placeholder.png'}}" mode="aspectFill"></image>
+        <image class="book-cover" src="{{item.cover_image || '/assets/icons/book-placeholder.png'}}" mode="aspectFill"></image>
         <view class="book-info">
           <text class="book-title text-ellipsis">{{item.title}}</text>
           <text class="book-author text-ellipsis">{{item.author}}</text>
           <view class="book-meta">
-            <text class="campus">{{item.campus}}</text>
-            <text class="condition">{{item.condition}}</text>
+            <text class="campus">{{item.campusLabel}}</text>
+            <text class="condition">{{item.conditionLabel}}</text>
           </view>
           <view class="book-price-row">
             <text class="price">{{item.price}}</text>

@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="rating-section">
+    <text class="section-title">评分</text>
+    <slider min="1" max="5" value="{{rating}}" show-value bindchange="onRatingChange" />
+  </view>
+
+  <view class="content-section">
+    <text class="section-title">评价内容</text>
+    <textarea 
+      class="review-content" 
+      placeholder="请输入您的评价内容..." 
+      bindinput="onContentInput"
+      value="{{content}}"
+    />
+  </view>
+
+  <button 
+    class="submit-btn" 
+    type="primary" 
+    loading="{{loading}}" 
+    bindtap="submitReview"
+  >提交评价</button>
+</view> 

@@ -2,83 +2,77 @@
   <!-- 状态切换栏 -->
   <view class="status-bar">
     <view 
-      class="status-item {{currentStatus === '' ? 'active' : ''}}" 
+      class="status-item {{currentStatus === 'UNPAID' ? 'active' : ''}}" 
       bindtap="changeStatus" 
-      data-status=""
-    >全部</view>
-    <view 
-      class="status-item {{currentStatus === 'pending_payment' ? 'active' : ''}}" 
-      bindtap="changeStatus" 
-      data-status="pending_payment"
+      data-status="UNPAID"
     >待付款</view>
     <view 
-      class="status-item {{currentStatus === 'pending_delivery' ? 'active' : ''}}" 
+      class="status-item {{currentStatus === 'PAID' ? 'active' : ''}}" 
       bindtap="changeStatus" 
-      data-status="pending_delivery"
-    >待发货</view>
-    <view 
-      class="status-item {{currentStatus === 'pending_receipt' ? 'active' : ''}}" 
-      bindtap="changeStatus" 
-      data-status="pending_receipt"
+      data-status="PAID"
     >待收货</view>
     <view 
-      class="status-item {{currentStatus === 'completed' ? 'active' : ''}}" 
+      class="status-item {{currentStatus === 'RECEIVED' ? 'active' : ''}}" 
       bindtap="changeStatus" 
-      data-status="completed"
-    >已完成</view>
+      data-status="RECEIVED"
+    >待评价</view>
+    <view 
+      class="status-item {{currentStatus === 'REFUNDING' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="REFUNDING"
+    >退款中</view>
   </view>
 
   <!-- 订单列表 -->
   <view class="order-list" wx:if="{{orders.length > 0}}">
     <view class="order-item" wx:for="{{orders}}" wx:key="id">
-      <!-- 订单头部 -->
       <view class="order-header">
-        <text class="order-time">{{item.createTime}}</text>
-        <text class="order-status">{{item.statusText}}</text>
+        <text class="order-number">订单号：{{item.order_number}}</text>
+        <text class="order-status {{item.status.toLowerCase()}}">{{statusMap[item.status]}}</text>
       </view>
 
-      <!-- 商品信息 -->
-      <view class="book-info" bindtap="navigateToDetail" data-id="{{item.id}}">
-        <image class="book-cover" src="{{item.book.cover}}" mode="aspectFill"></image>
+      <view class="book-info" bindtap="goToOrderDetail" data-id="{{item.id}}">
         <view class="book-detail">
-          <text class="book-title text-ellipsis">{{item.book.title}}</text>
-          <text class="book-author text-ellipsis">{{item.book.author}}</text>
-          <view class="book-meta">
-            <text class="campus">{{item.book.campus}}</text>
-            <text class="condition">{{item.book.condition}}</text>
-          </view>
-          <view class="price-row">
-            <text class="price">{{item.price}}</text>
-            <text class="count">x1</text>
-          </view>
+          <text class="book-title">{{item.book_detail.title}}</text>
+          <text class="book-author">作者：{{item.book_detail.author}}</text>
+          <text class="book-price">¥{{item.book_detail.price}}</text>
         </view>
       </view>
 
-      <!-- 订单底部 -->
       <view class="order-footer">
-        <text class="total">合计：¥{{item.price}}</text>
+        <text class="total">合计：¥{{item.amount}}</text>
         <view class="btn-group">
           <!-- 待付款 -->
-          <block wx:if="{{item.status === 'pending_payment'}}">
+          <block wx:if="{{item.status === 'UNPAID'}}">
             <button class="btn btn-default" bindtap="cancelOrder" data-id="{{item.id}}">取消订单</button>
             <button class="btn btn-primary" bindtap="payOrder" data-id="{{item.id}}">立即付款</button>
           </block>
           
-          <!-- 待发货 -->
-          <block wx:elif="{{item.status === 'pending_delivery'}}">
-            <button class="btn btn-primary" bindtap="contactSeller" data-id="{{item.id}}">联系卖家</button>
-          </block>
-          
           <!-- 待收货 -->
-          <block wx:elif="{{item.status === 'pending_receipt'}}">
-            <button class="btn btn-default" bindtap="contactSeller" data-id="{{item.id}}">联系卖家</button>
+          <block wx:elif="{{item.status === 'PAID'}}">
+            <button class="btn btn-default" bindtap="applyRefund" data-id="{{item.id}}">申请退款</button>
             <button class="btn btn-primary" bindtap="confirmReceipt" data-id="{{item.id}}">确认收货</button>
           </block>
           
-          <!-- 已完成 -->
-          <block wx:elif="{{item.status === 'completed'}}">
+          <!-- 待评价 -->
+          <block wx:elif="{{item.status === 'RECEIVED'}}">
+            <button class="btn btn-primary" bindtap="writeReview" data-id="{{item.id}}">评价订单</button>
+          </block>
+
+          <!-- 退款中 -->
+          <block wx:elif="{{item.status === 'REFUNDING'}}">
+            <button class="btn btn-default" bindtap="cancelRefund" data-id="{{item.id}}">取消退款</button>
+            <button class="btn btn-primary" bindtap="contactService" data-id="{{item.id}}">联系客服</button>
+          </block>
+
+          <!-- 已退款 -->
+          <block wx:elif="{{item.status === 'REFUNDED'}}">
             <button class="btn btn-default" bindtap="deleteOrder" data-id="{{item.id}}">删除订单</button>
-            <button class="btn btn-primary" bindtap="writeReview" data-id="{{item.id}}" wx:if="{{!item.hasReview}}">评价</button>
+          </block>
+
+          <!-- 已完成 -->
+          <block wx:elif="{{item.status === 'COMPLETED'}}">
+            <button class="btn btn-default" bindtap="deleteOrder" data-id="{{item.id}}">删除订单</button>
           </block>
         </view>
       </view>

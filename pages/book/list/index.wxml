@@ -1,0 +1,58 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input 
+      type="text" 
+      placeholder="搜索图书" 
+      value="{{searchValue}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearch"
+    />
+    <button bindtap="onSearch">搜索</button>
+  </view>
+
+  <!-- 分类选择 -->
+  <view class="category-bar">
+    <picker 
+      bindchange="onCategoryChange" 
+      value="{{selectedCategory}}" 
+      range="{{categories}}"
+    >
+      <view class="picker">
+        当前分类：{{selectedCategory || '全部'}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 图书列表 -->
+  <view class="book-list">
+    <block wx:if="{{books.length > 0}}">
+      <view 
+        class="book-item" 
+        wx:for="{{books}}" 
+        wx:key="id"
+        data-book-id="{{item.id}}"
+        bindtap="navigateToDetail"
+      >
+        <image class="book-cover" src="{{item.cover_image || '/assets/images/default-book.png'}}" mode="aspectFill"/>
+        <view class="book-info">
+          <text class="book-title">{{item.title}}</text>
+          <text class="book-author">{{item.author}}</text>
+          <text class="book-price">¥{{item.price}}</text>
+          <text class="book-condition">{{item.condition}}</text>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty-tip">
+      暂无图书数据
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more" wx:if="{{!hasMore && books.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+</view> 

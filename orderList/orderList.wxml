@@ -1,0 +1,131 @@
+<view class="container">
+  <!-- 状态切换栏 -->
+  <view class="status-bar">
+    <view 
+      class="status-item {{currentStatus === 'UNPAID' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="pending_payment"
+    >待付款</view>
+    <view 
+      class="status-item {{currentStatus === 'PAID' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="pending_receipt"
+    >待收货</view>
+    <view 
+      class="status-item {{currentStatus === 'RECEIVED' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="pending_review"
+    >待评价</view>
+    <view 
+      class="status-item {{currentStatus === 'REFUNDING' ? 'active' : ''}}" 
+      bindtap="changeStatus" 
+      data-status="refund"
+    >退款</view>
+  </view>
+
+  <!-- 订单列表 -->
+  <view class="order-list" wx:if="{{orders.length > 0}}">
+    <view class="order-item" wx:for="{{orders}}" wx:key="id">
+      <!-- 订单头部 -->
+      <view class="order-header">
+        <text class="order-time">{{item.created_at}}</text>
+        <text class="order-status {{item.status.toLowerCase()}}">{{item.statusText}}</text>
+      </view>
+
+      <!-- 商品信息 -->
+      <view class="book-info" bindtap="navigateToDetail" data-id="{{item.id}}">
+        <image class="book-cover" src="{{item.book_detail.cover}}" mode="aspectFill"></image>
+        <view class="book-detail">
+          <text class="book-title text-ellipsis">{{item.book_detail.title}}</text>
+          <text class="book-author text-ellipsis">{{item.book_detail.author}}</text>
+          <view class="book-meta">
+            <text class="campus">{{item.book_detail.campus}}</text>
+            <text class="condition">{{item.book_detail.condition}}</text>
+          </view>
+          <view class="price-row">
+            <text class="price">{{item.amount}}</text>
+            <text class="count">x1</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 订单底部 -->
+      <view class="order-footer">
+        <text class="total">合计：¥{{item.amount}}</text>
+        <view class="btn-group">
+          <!-- 待付款 -->
+          <block wx:if="{{item.status === 'UNPAID'}}">
+            <button class="btn btn-default" bindtap="cancelOrder" data-id="{{item.id}}">取消订单</button>
+            <button class="btn btn-primary" bindtap="payOrder" data-id="{{item.id}}">立即付款</button>
+          </block>
+          
+          <!-- 待收货 -->
+          <block wx:elif="{{item.status === 'PAID'}}">
+            <button class="btn btn-default" bindtap="applyRefund" data-id="{{item.id}}">申请退款</button>
+            <button class="btn btn-primary" bindtap="confirmReceipt" data-id="{{item.id}}">确认收货</button>
+          </block>
+          
+          <!-- 待评价 -->
+          <block wx:elif="{{item.status === 'RECEIVED'}}">
+            <button class="btn btn-primary" bindtap="showRatingModal" data-id="{{item.id}}">评价订单</button>
+          </block>
+
+          <!-- 退款中 -->
+          <block wx:elif="{{item.status === 'REFUNDING'}}">
+            <button class="btn btn-default" bindtap="cancelRefund" data-id="{{item.id}}">取消退款</button>
+            <button class="btn btn-primary" bindtap="contactService" data-id="{{item.id}}">联系客服</button>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:else>
+    <image class="empty-icon" src="/assets/icons/empty.png" mode="aspectFit"></image>
+    <text>暂无订单</text>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!loading && !hasMore}}">没有更多了</view>
+
+  <!-- 评分弹窗 -->
+  <view class="rating-modal {{showRating ? 'show' : ''}}">
+    <view class="rating-content">
+      <view class="rating-title">评价订单</view>
+      
+      <!-- 星级评分 -->
+      <view class="rating-stars">
+        <view class="star-row">
+          <view class="star-label">商品评分</view>
+          <view class="stars">
+            <image 
+              class="star" 
+              wx:for="{{5}}" 
+              wx:key="index"
+              src="{{rating >= index + 1 ? '/assets/icons/star-active.png' : '/assets/icons/star.png'}}"
+              bindtap="setRating"
+              data-rating="{{index + 1}}"
+            />
+          </view>
+          <text class="rating-text">{{['很差', '一般', '还行', '不错', '很好'][rating - 1] || '请选择'}}</text>
+        </view>
+      </view>
+
+      <!-- 评价内容 -->
+      <textarea 
+        class="rating-comment" 
+        placeholder="请输入评价内容（选填）" 
+        value="{{ratingComment}}"
+        bindinput="onCommentInput"
+      ></textarea>
+
+      <!-- 按钮组 -->
+      <view class="rating-btns">
+        <button class="btn btn-default" bindtap="closeRatingModal">取消</button>
+        <button class="btn btn-primary" bindtap="submitRating">提交评价</button>
+      </view>
+    </view>
+  </view>
+</view> 

@@ -1,87 +1,102 @@
 .container {
   padding: 20rpx;
+  background: #f5f5f5;
+  min-height: 100vh;
 }
 
 .category-list {
   background: #fff;
-  border-radius: 10rpx;
+  border-radius: 12rpx;
+  padding: 20rpx;
   margin-bottom: 20rpx;
 }
 
 .category-section {
-  padding: 20rpx;
-  border-bottom: 1rpx solid #f5f5f5;
+  margin-bottom: 30rpx;
 }
 
 .category-section:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .section-title {
   font-size: 32rpx;
   color: #333;
-  margin-bottom: 20rpx;
   font-weight: bold;
+  margin-bottom: 20rpx;
 }
 
 .tag-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20rpx;
+  gap: 16rpx;
 }
 
 .tag {
-  padding: 10rpx 20rpx;
+  padding: 12rpx 24rpx;
   background: #f5f5f5;
   border-radius: 30rpx;
   font-size: 28rpx;
   color: #666;
+  transition: all 0.3s ease;
 }
 
 .tag.active {
-  background: #3cc51f;
+  background: #1890ff;
   color: #fff;
+  box-shadow: 0 2rpx 8rpx rgba(24, 144, 255, 0.3);
 }
 
+/* 书籍列表样式 */
 .book-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.book-item {
-  width: 48%;
-  margin-bottom: 20rpx;
-  background: #fff;
-  border-radius: 10rpx;
-  overflow: hidden;
-}
-
-.book-item image {
-  width: 100%;
-  height: 300rpx;
-}
-
-.book-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
   padding: 20rpx;
 }
 
-.book-info .title {
-  font-size: 28rpx;
-  color: #333;
-  display: block;
-  margin-bottom: 10rpx;
+.book-item {
+  background: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
-.book-info .price {
+.book-image {
+  width: 100%;
+  height: 240rpx;
+  background: #f5f5f5;
+  object-fit: cover;
+}
+
+.book-info {
+  padding: 16rpx;
+}
+
+.title {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.price {
   font-size: 32rpx;
-  color: #e64340;
+  color: #ff4d4f;
   font-weight: bold;
+}
+
+.price::before {
+  content: '¥';
+  font-size: 24rpx;
 }
 
 .empty-state {
   text-align: center;
-  padding: 40rpx;
+  padding: 60rpx 0;
   color: #999;
   font-size: 28rpx;
 } 

@@ -37,65 +37,106 @@
 }
 
 .message-list {
-  background: #fff;
+  background: #f5f5f5;
+  padding: 0;
 }
 
 .message-item {
-  display: flex;
-  align-items: center;
+  background: #fff;
+  margin-bottom: 20rpx;
   padding: 30rpx 20rpx;
-  border-bottom: 1rpx solid #f5f5f5;
+  display: flex;
+  align-items: flex-start;
   position: relative;
+  border-radius: 16rpx;
+  margin: 0 20rpx 20rpx 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  min-height: 140rpx;
 }
 
-.avatar, .system-icon {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-  margin-right: 20rpx;
+.message-item:active {
+  background: #f8f8f8;
 }
 
 .content {
   flex: 1;
   overflow: hidden;
+  padding-right: 160rpx;
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10rpx;
+  align-items: center;
+  margin-bottom: 12rpx;
 }
 
 .name {
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #333;
-  font-weight: bold;
+  font-weight: 600;
+  margin-right: 20rpx;
 }
 
 .time {
+  position: absolute;
+  top: 30rpx;
+  right: 20rpx;
   font-size: 24rpx;
   color: #999;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.book-info {
+  margin-bottom: 8rpx;
+}
+
+.book-title {
+  font-size: 26rpx;
+  color: #666;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .message {
-  font-size: 26rpx;
+  font-size: 28rpx;
   color: #666;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
+  background: #f8f9fa;
+  padding: 12rpx 16rpx;
+  border-radius: 8rpx;
+  margin-top: 8rpx;
+  line-height: 1.5;
+  word-break: break-all;
+  min-height: 44rpx;
 }
 
 .badge {
   position: absolute;
-  top: 30rpx;
+  top: 60rpx;
   right: 20rpx;
-  background: #e64340;
+  background: #ff4757;
   color: #fff;
-  font-size: 24rpx;
-  padding: 4rpx 12rpx;
-  border-radius: 20rpx;
-  min-width: 32rpx;
+  font-size: 22rpx;
+  padding: 4rpx 10rpx;
+  border-radius: 12rpx;
+  min-width: 24rpx;
   text-align: center;
+  font-weight: 600;
+}
+
+.system-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  margin-top: 8rpx;
+  flex-shrink: 0;
 }
 
 .status {
@@ -112,7 +153,17 @@
 
 .empty-state {
   text-align: center;
-  padding: 100rpx 0;
+  padding: 120rpx 40rpx;
   color: #999;
   font-size: 28rpx;
+  background: #fff;
+  margin: 20rpx;
+  border-radius: 16rpx;
+}
+
+.empty-state::before {
+  content: '💬';
+  display: block;
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
 } 

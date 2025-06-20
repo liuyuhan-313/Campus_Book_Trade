@@ -1,0 +1,96 @@
+<view class="container">
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  
+  <block wx:elif="{{orderInfo}}">
+    <!-- 订单状态 -->
+    <view class="status-section">
+      <text class="status {{orderInfo.status.toLowerCase()}}">{{statusMap[orderInfo.status]}}</text>
+    </view>
+
+    <!-- 商品信息 -->
+    <view class="book-section">
+      <image class="book-cover" src="{{orderInfo.book.cover}}" mode="aspectFill"></image>
+      <view class="book-info">
+        <text class="book-title">{{orderInfo.book.title}}</text>
+        <text class="book-author">{{orderInfo.book.author}}</text>
+        <view class="book-meta">
+          <text class="campus">{{orderInfo.book.campus}}</text>
+          <text class="condition">{{orderInfo.book.condition}}</text>
+        </view>
+        <text class="price">¥{{orderInfo.amount}}</text>
+      </view>
+    </view>
+
+    <!-- 订单信息 -->
+    <view class="order-section">
+      <view class="section-title">订单信息</view>
+      <view class="info-item" bindtap="copyOrderNumber">
+        <text class="label">订单编号</text>
+        <text class="value">{{orderInfo.order_number}}</text>
+        <text class="copy">复制</text>
+      </view>
+      <view class="info-item">
+        <text class="label">创建时间</text>
+        <text class="value">{{orderInfo.created_at}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">支付方式</text>
+        <text class="value">线下支付</text>
+      </view>
+    </view>
+
+    <!-- 收货信息 -->
+    <view class="delivery-section">
+      <view class="section-title">收货信息</view>
+      <view class="info-item">
+        <text class="label">收货人</text>
+        <text class="value">{{orderInfo.contact_name}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">联系电话</text>
+        <text class="value">{{orderInfo.contact_phone}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">收货地址</text>
+        <text class="value">{{orderInfo.address}}</text>
+      </view>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="footer">
+      <!-- 待付款 -->
+      <block wx:if="{{orderInfo.status === 'UNPAID'}}">
+        <button class="btn btn-default" bindtap="cancelOrder">取消订单</button>
+        <button class="btn btn-primary" bindtap="payOrder">立即付款</button>
+      </block>
+      
+      <!-- 待发货 -->
+      <block wx:elif="{{orderInfo.status === 'pending_delivery'}}">
+        <button class="btn btn-primary" bindtap="contactSeller">联系卖家</button>
+      </block>
+      
+      <!-- 待收货 -->
+      <block wx:elif="{{orderInfo.status === 'PAID'}}">
+        <button class="btn btn-default" bindtap="applyRefund">申请退款</button>
+        <button class="btn btn-primary" bindtap="confirmReceipt">确认收货</button>
+      </block>
+      
+      <!-- 待评价 -->
+      <block wx:elif="{{orderInfo.status === 'RECEIVED'}}">
+        <button class="btn btn-primary" bindtap="writeReview">评价订单</button>
+      </block>
+
+      <!-- 退款中 -->
+      <block wx:elif="{{orderInfo.status === 'REFUNDING'}}">
+        <button class="btn btn-default" bindtap="cancelRefund">取消退款</button>
+        <button class="btn btn-primary" bindtap="contactService">联系客服</button>
+      </block>
+    </view>
+  </block>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:else>
+    <image class="empty-icon" src="/assets/icons/empty.png" mode="aspectFit"></image>
+    <text>订单不存在或已被删除</text>
+  </view>
+</view> 

@@ -1,6 +1,6 @@
 <view class="container">
   <form bindsubmit="submitForm">
-    <!-- 图片上传 -->
+    <!-- 图片上传部分保持不变 -->
     <view class="upload-section">
       <view class="upload-list">
         <block wx:for="{{images}}" wx:key="*this">
@@ -32,8 +32,8 @@
       </view>
       
       <view class="form-item">
-        <text class="label required">出版社</text>
-        <input placeholder="请输入出版社" value="{{form.publisher}}" bindinput="inputChange" data-field="publisher"/>
+        <text class="label">出版社</text>
+        <input placeholder="请输入出版社（选填）" value="{{form.publisher}}" bindinput="inputChange" data-field="publisher"/>
       </view>
       
       <view class="form-item">
@@ -41,9 +41,21 @@
         <input placeholder="请输入ISBN（选填）" value="{{form.isbn}}" bindinput="inputChange" data-field="isbn"/>
       </view>
       
+      <!-- 修改分类选择器 -->
       <view class="form-item">
-        <text class="label required">原价</text>
-        <input type="digit" placeholder="请输入原价" value="{{form.originalPrice}}" bindinput="inputChange" data-field="originalPrice"/>
+        <text class="label required">分类</text>
+        <picker class="picker" 
+                range="{{categories}}" 
+                range-key="name"
+                value="{{categoryIndex}}" 
+                bindchange="categoryChange">
+          <view>{{categoryIndex === -1 ? '请选择分类' : form.categoryText}}</view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <text class="label">原价</text>
+        <input type="digit" placeholder="请输入原价（选填）" value="{{form.originalPrice}}" bindinput="inputChange" data-field="originalPrice"/>
       </view>
       
       <view class="form-item">
@@ -51,29 +63,45 @@
         <input type="digit" placeholder="请输入售价" value="{{form.price}}" bindinput="inputChange" data-field="price"/>
       </view>
       
+      <!-- 修改校区选择器 -->
       <view class="form-item">
         <text class="label required">校区</text>
-        <picker class="picker" range="{{campuses}}" value="{{campusIndex}}" bindchange="campusChange">
-          <view>{{campusIndex === -1 ? '请选择校区' : campuses[campusIndex]}}</view>
+        <picker class="picker" 
+                range="{{campuses}}" 
+                range-key="label"
+                value="{{campusIndex}}" 
+                bindchange="campusChange">
+          <view>{{campusIndex === -1 ? '请选择校区' : form.campusText}}</view>
         </picker>
       </view>
       
+      <!-- 修改成色选择器 -->
       <view class="form-item">
         <text class="label required">成色</text>
-        <picker class="picker" range="{{conditions}}" value="{{conditionIndex}}" bindchange="conditionChange">
-          <view>{{conditionIndex === -1 ? '请选择成色' : conditions[conditionIndex]}}</view>
+        <picker class="picker" 
+                range="{{conditions}}" 
+                range-key="label"
+                value="{{conditionIndex}}" 
+                bindchange="conditionChange">
+          <view>{{conditionIndex === -1 ? '请选择成色' : form.conditionText}}</view>
         </picker>
       </view>
       
       <view class="form-item">
         <text class="label required">描述</text>
-        <textarea placeholder="请输入书本描述" value="{{form.description}}" bindinput="inputChange" data-field="description"/>
+        <textarea placeholder="请详细描述书本的情况，例如：有无笔记、破损等" 
+                  value="{{form.description}}" 
+                  bindinput="inputChange" 
+                  data-field="description"/>
       </view>
     </view>
 
     <!-- 提交按钮 -->
-    <button class="submit-btn" loading="{{submitting}}" bindtap="submitForm">
+    <button class="submit-btn" 
+            loading="{{submitting}}" 
+            bindtap="submitForm"
+            disabled="{{submitting}}">
       {{submitting ? '发布中...' : '立即发布'}}
     </button>
   </form>
-</view> 
+</view>

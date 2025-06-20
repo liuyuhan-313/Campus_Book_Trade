@@ -14,8 +14,8 @@
     </view>
     <view class="title">{{book.title}}</view>
     <view class="meta">
-      <text class="campus">{{book.campus}}</text>
-      <text class="condition">{{book.condition}}</text>
+      <text class="campus">{{book.campusLabel}}</text>
+      <text class="condition">{{book.conditionLabel}}</text>
     </view>
   </view>
 
@@ -35,7 +35,7 @@
     </view>
     <view class="detail-item">
       <text class="label">新旧程度</text>
-      <text class="value">{{book.condition}}</text>
+      <text class="value">{{book.conditionLabel}}</text>
     </view>
   </view>
 
@@ -49,7 +49,7 @@
   <view class="seller-section">
     <view class="section-title">卖家信息</view>
     <view class="seller-info">
-      <image class="avatar" src="{{book.seller.avatar}}" mode="aspectFill"></image>
+      <image class="avatar" src="{{book.seller.avatar}}" mode="aspectFill" binderror="onAvatarError"></image>
       <view class="seller-detail">
         <text class="nickname">{{book.seller.nickname}}</text>
         <text class="credit-score">信用分：{{book.seller.creditScore}}</text>
@@ -58,14 +58,14 @@
     </view>
   </view>
 
-  <!-- 底部操作栏 -->
-  <view class="action-bar">
+<!-- 底部操作栏 -->
+<view class="action-bar">
     <view class="action-item" bindtap="toggleCollect">
-      <image src="/assets/icons/{{isCollected ? 'collect-active' : 'collect'}}.png"></image>
-      <text>收藏</text>
+      <image class="icon" src="/assets/icons/{{isCollected ? 'collect-active' : 'collect'}}.png"></image>
+      <text class="{{isCollected ? 'active' : ''}}">{{isCollected ? '已收藏' : '收藏'}}</text>
     </view>
     <view class="action-item" bindtap="share">
-      <image src="/assets/icons/share.png"></image>
+      <image class="icon" src="/assets/icons/share.png"></image>
       <text>分享</text>
     </view>
     <button class="buy-btn" bindtap="buy">立即购买</button>

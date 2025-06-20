@@ -1,0 +1,88 @@
+<!-- 已发布图书列表页面 -->
+<view class="container">
+  <view class="book-list">
+    <view class="book-item" wx:for="{{books}}" wx:key="id">
+      <image class="book-image" 
+             src="{{item.cover_image || '/assets/icons/default-book.png'}}" 
+             mode="aspectFill"
+             lazy-load="true"></image>
+      <view class="book-info">
+        <text class="book-title">{{item.title}}</text>
+        <text class="book-price">¥{{item.price}}</text>
+        <text class="book-status {{item.refund_status ? 'refunding' : (!item.is_sold ? 'on-sale' : 'sold')}}">
+          {{item.refund_status ? '请求退款' : (!item.is_sold ? '在售' : '已售出')}}
+        </text>
+      </view>
+      <view class="book-actions">
+        <!-- 退款状态的按钮 -->
+        <block wx:if="{{item.refund_status}}">
+          <button class="action-btn approve" bindtap="approveRefund" data-id="{{item.id}}" data-order-id="{{item.order_id}}">同意退款</button>
+          <button class="action-btn contact" bindtap="contactService" data-id="{{item.id}}">联系客服</button>
+        </block>
+        <!-- 正常状态的按钮 -->
+        <block wx:else>
+          <button class="action-btn edit" bindtap="editBook" data-book="{{item}}" wx:if="{{!item.is_sold}}">编辑</button>
+          <button class="action-btn delete" bindtap="showDeleteConfirm" data-id="{{item.id}}">删除</button>
+        </block>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!books.length}}">
+    <image src="/assets/icons/empty.png" mode="aspectFit"></image>
+    <text>还没有发布过图书哦</text>
+    <button class="publish-btn" bindtap="navigateToPublish">去发布</button>
+  </view>
+</view>
+
+<!-- 编辑弹窗 -->
+<view class="edit-modal" wx:if="{{showEditModal}}">
+  <view class="modal-content">
+    <view class="modal-header">
+      <text>编辑图书信息</text>
+      <image class="close-icon" src="/assets/icons/delete.png" bindtap="closeEditModal"></image>
+    </view>
+    <view class="form-item">
+      <text class="label">书名</text>
+      <input type="text" value="{{editBook.title}}" bindinput="onTitleInput"/>
+    </view>
+    <view class="form-item">
+      <text class="label">作者</text>
+      <input type="text" value="{{editBook.author}}" bindinput="onAuthorInput"/>
+    </view>
+    <view class="form-item">
+      <text class="label">价格</text>
+      <input type="digit" value="{{editBook.price}}" bindinput="onPriceInput"/>
+    </view>
+    <view class="form-item">
+      <text class="label">描述</text>
+      <textarea value="{{editBook.description}}" bindinput="onDescriptionInput"></textarea>
+    </view>
+    <view class="form-item">
+      <text class="label">校区</text>
+      <picker mode="selector" range="{{campusList}}" range-key="label" value="{{campusIndex}}" bindchange="onCampusChange">
+        <view class="picker">
+          {{campusList[campusIndex].label}}
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="label">成色</text>
+      <picker mode="selector" range="{{conditionList}}" range-key="label" value="{{conditionIndex}}" bindchange="onConditionChange">
+        <view class="picker">
+          {{conditionList[conditionIndex].label}}
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="label">状态</text>
+      <picker mode="selector" range="{{statusList}}" range-key="label" value="{{statusIndex}}" bindchange="onStatusChange">
+        <view class="picker">
+          {{statusList[statusIndex].label}}
+        </view>
+      </picker>
+    </view>
+    <button class="save-btn" bindtap="updateBook">保存修改</button>
+  </view>
+</view> 
