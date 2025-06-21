@@ -54,7 +54,7 @@ git clone <repository-url>
 cd miniprogram-6\ 5
 ```
 
-### 2. 后端环境配置
+### 2. 后端环境配置（Campus-Book-Trade文件夹是后端文件）
 
 #### 2.1 创建虚拟环境
 
