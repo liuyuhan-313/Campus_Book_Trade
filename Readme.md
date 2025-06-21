@@ -60,7 +60,7 @@ cd miniprogram-6\ 5
 
 ```bash
 cd Campus-Book-Trade
-python3 -m venv myenv
+python -m venv myenv
 source myenv/bin/activate  # macOS/Linux
 myenv\Scripts\activate  # Windows
 ```
